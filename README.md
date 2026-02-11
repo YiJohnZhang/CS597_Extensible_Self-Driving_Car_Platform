@@ -2,7 +2,8 @@
 Extensible self-driving car platform for CS437; can be repurposed for other course offerings.
 
 ## Project Architecture Architectural
-![CS597_Extensible_Self-Driving_Car_Platform_architecture](./_assets/CS597_architecture_block_diagram)
+![CS597_Extensible_Self-Driving_Car_Platform_architecture](https://github.com/YiJohnZhang/CS597_Extensible_Self-Driving_Car_Platform/blob/main/_assets/CS597_architecture_block_diagram.png)
+
 
 ## Contributors
 - Yi Zhang
