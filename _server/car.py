@@ -119,7 +119,7 @@ class Car:
 			# speed == 0
 			manuever_string_prefix = MANUEVER_PREFIX_MAP['STOP']
 
-		manuever_message = f'{manuever_string_prefix}{DELIMIT_CHARACTER}{speed}{DELIMIT_CHARACTER}{is_reversed}'
+		manuever_message = f'{manuever_string_prefix}{DELIMIT_CHARACTER}{speed}'
 			# 1 byte + ceil(pwm_bits >> 3) bytes + 1 bit
 		self.i2c_slave_1.acutate_motor(manuever_message)		
 

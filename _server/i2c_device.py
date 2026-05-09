@@ -24,11 +24,13 @@ class I2C_Device:
 
 	def __init__(self, device_address: int = DEFAULT_DEVICE_ADDRESS, 
 			  _is_debug_mode: bool = _IS_DEBUG_MODE, device_name: str = None):
+		
 		self.smbus_obj = SMBus(I2C_CHANNEL)
+			# rpi smbus channel no.
 		self.device_address = device_address
 		self._is_debug_mode = _is_debug_mode
 		self.device_name = device_name or I2C_DRIVER_DEVICE_NAME
-	
+
 	def __enter__(self):
 		return self
 
@@ -145,10 +147,29 @@ class CH592F_Device(I2C_Device):
 		return f'[CH592F]:{parent_representation}'
 
 	def _debug(self, method_name: str, message: str) -> None:
-		print(f'{self.__repr__()}::{method_name}::{message}')
+		print(f'{self.__repr__()}::{method_name}:{message}')
 
 	def _init_frequency(self) -> None:
 		pass
+
+	def send_i2c_string(self, message_type: str, message: str) -> None:
+		'''
+		
+		'''
+		send_message = f'{message_type}|{message}'
+		byte_string = [ord(char) for char in send_message]
+
+		try:
+			self.smbus_obj.write_i2c_block_data(self.device_address, 0x00, byte_string)
+			# https://arduino.stackexchange.com/a/47969
+		except Exception as e:
+			self._debug('send_i2c_string', e)
+
+		return
+
+	def receive_i2c_string(self, register, length):
+
+		return
 	
 	def set_performance_mode(self, is_high_performance: bool) -> None:
 		'''
@@ -158,10 +179,11 @@ class CH592F_Device(I2C_Device):
 		In battery saver mode, a specific sensor is only polled upon request: slower but
 		saves power.
 		'''
+		pass
 	
 	def acutate_motor(self, message: str) -> None:
 		'''
-		Send an actuation command to the MCU.
+		Send an actuation command to a slave I2C MCU.
 		'''
 		# self.write_pwm(direction, duty_cycle)
 		if self._is_debug_mode:
@@ -191,10 +213,12 @@ class CH592F_Device(I2C_Device):
 		if self._is_debug_mode:
 			self._debug('acutate_lidar_motor', '')
 
-	def get_environment_temperature(self) -> int:
+	def get_environment_temperature(self, channel: int = 0) -> int:
 		'''
 		
 		'''
+		command = f"T{channel:03d}"
+
 		if self._is_debug_mode:
 			self._debug('get_environment_temperature', '')
 
@@ -202,6 +226,8 @@ class CH592F_Device(I2C_Device):
 		'''
 		
 		'''
+		command = f"U{channel:03d}"
+			# Note: f"{integer:03d}" prefixes it with `0` s.t. it is of form `000`
 
 		return_distance = 0	#TODO: temp
 		if self._is_debug_mode:
@@ -212,12 +238,13 @@ class CH592F_Device(I2C_Device):
 		Currently returns Cartesian coordinate triple.
 		TODO: later impelement the option to return spherical coordinates.
 		'''
+		return
 		if self._is_debug_mode:
 			self._debug('get_position', f'({x_coordinate}, {y_coordinate}, {z_coordinate})')
 
 	def get_ultrasonic_map(self, ):
 		'''
-		
+		If we decide to process data slave-side. (Cpp is a lighter language and we can just stream data from slave to master; maybe use SPI/CAN).
 		'''
 		# pass
 		return
@@ -228,7 +255,7 @@ class CH592F_Device(I2C_Device):
 
 	def get_lidar_map(self, ):
 		'''
-		
+		If we decide to process data slave-side. (Cpp is a lighter language and we can just stream data from slave to master; maybe use SPI/CAN).
 		'''
 		# pass
 		return
