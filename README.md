@@ -74,6 +74,6 @@ python3 your_app_name.py	# to run
 - License Details
 
 ## Lab Instructions
-	- [ ] Lab 01A: assembly + pcb exercise, naive mapping, naive self-driving, 
-	- [ ] Lab 01B: advanced mapping, object detection w/ camera, self-driving + maze navigation
-	- [ ] Lab 02: wifi and bt; remote control from front-end server!
+- [ ] Lab 01A: assembly + pcb exercise, naive mapping, naive self-driving, 
+- [ ] Lab 01B: advanced mapping, object detection w/ camera, self-driving + maze navigation
+- [ ] Lab 02: wifi and bt; remote control from front-end server!
